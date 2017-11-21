@@ -1,7 +1,118 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-angular.module("app.home").controller("HomeCtrl",["$scope",function(o){o.version="0"}]);
-},{}],2:[function(require,module,exports){
-module.exports=angular.module("app.home",[]),require("./HomeCtrl");
-},{"./HomeCtrl":1}],3:[function(require,module,exports){
-angular.module("app",[require("./home").name]);
-},{"./home":2}]},{},[3])
+(function($){
+    $.fn.scrollingTo = function( opts ) {
+        var defaults = {
+            animationTime : 1000,
+            easing : '',
+            callbackBeforeTransition : function(){},
+            callbackAfterTransition : function(){}
+        };
+
+        var config = $.extend( {}, defaults, opts );
+
+        $(this).click(function(e){
+            var eventVal = e;
+            e.preventDefault();
+
+            var $section = $(document).find( $(this).data('section') );
+            if ( $section.length < 1 ) {
+                return false;
+            };
+
+            if ( $('html, body').is(':animated') ) {
+                $('html, body').stop( true, true );
+            };
+
+            var scrollPos = $section.offset().top;
+
+            if ( $(window).scrollTop() == scrollPos ) {
+                return false;
+            };
+
+            config.callbackBeforeTransition(eventVal, $section);
+
+            $('html, body').animate({
+                'scrollTop' : (scrollPos+'px' )
+            }, config.animationTime, config.easing, function(){
+                config.callbackAfterTransition(eventVal, $section);
+            });
+        });
+    };
+}(jQuery));
+
+
+
+jQuery(document).ready(function(){
+	"use strict";
+	new WOW().init();
+
+
+(function(){
+ jQuery('.smooth-scroll').scrollingTo();
+}());
+
+});
+
+
+
+
+$(document).ready(function(){
+
+
+
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 50) {
+            $(".navbar-brand a").css("color","#fff");
+            $("#top-bar").removeClass("animated-header");
+        } else {
+            $(".navbar-brand a").css("color","inherit");
+            $("#top-bar").addClass("animated-header");
+        }
+    });
+
+    $("#clients-logo").owlCarousel({
+ 
+        itemsCustom : false,
+        pagination : false,
+        items : 5,
+        autoplay: true,
+
+    })
+
+});
+
+
+
+// fancybox
+$(".fancybox").fancybox({
+    padding: 0,
+
+    openEffect : 'elastic',
+    openSpeed  : 450,
+
+    closeEffect : 'elastic',
+    closeSpeed  : 350,
+
+    closeClick : true,
+    helpers : {
+        title : { 
+            type: 'inside' 
+        },
+        overlay : {
+            css : {
+                'background' : 'rgba(0,0,0,0.8)'
+            }
+        }
+    }
+});
+
+
+
+
+
+
+ 
+
+
+
+
