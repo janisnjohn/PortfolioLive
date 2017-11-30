@@ -1,6 +1,6 @@
-if ($.cookie("theme_csspath")) {
-    $('link#theme-stylesheet').attr("href", $.cookie("theme_csspath"));
-}
+ // if ($.cookie("theme_csspath")) {
+ //     $('link#theme-stylesheet').attr("href", $.cookie("theme_csspath"));
+ // }
 
 $(function () {
 
@@ -9,7 +9,7 @@ $(function () {
     fullScreenContainer();
     utils();
     sliding();
-    contactForm();
+    // contactForm();
     map();
     counters();
     parallax();
@@ -18,9 +18,10 @@ $(function () {
 
 $(window).load(function () {
     windowWidth = $(window).width();
+    contactForm();
     $(this).alignElementsSameHeight();
 
-    masonry();
+     masonry();
 
 });
 $(window).resize(function () {
@@ -376,7 +377,7 @@ function map() {
 	 content: '<p>HTML Content</p>'
 	 }*/
     });
-}
+};
 
 /* =========================================
  *  UTILS
@@ -397,7 +398,7 @@ function utils() {
     });
     /* animated scrolling */
 
-}
+};
 
 $.fn.alignElementsSameHeight = function () {
     $('.same-height-row').each(function () {
@@ -441,26 +442,41 @@ function waypointsRefresh() {
 }
 
 /* ajax contact form */
-
 function contactForm() {
-    $("#contact-form").submit(function () {
-
-	var url = "contact.php"; // the script where you handle the form input.
-
-	$.ajax({
-	    type: "POST",
-	    url: url,
-	    data: $(this).serialize(), // serializes the form's elements.
-	    success: function (data)
-	    {
-		var messageAlert = 'alert-' + data.type;
-		var messageText = data.message;
-		var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable animated bounceIn"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-		if (messageAlert && messageText) {
-		    $('#contact-form').find('.messages').html(alertBox);
-		}
-	    }
-	});
-	return false; // avoid to execute the actual submit of the form.
-    });
-}
+	 	
+    $("#contact-form").submit(function(e) {	
+   		console.log("form submitted");
+		e.preventDefault();   
+	// var url = "contact.php"; // the script where you handle the form input.
+	var name = $('#name').val().trim(),
+		email = $('#email').val().trim(),
+		subject = $('#subject').val().trim(),
+		message = $('#message').val().trim();
+		console.log(name + email + subject +message);
+	if (!name || !email || !subject || !message){
+		//console.log("enter all fields");
+		alertify.error ("Please enter all fields");
+	} else {
+		$.ajax({
+			url: "https://formspree.io/johnnelsonlee@icloud.com",
+		    method: "POST",
+		    // data: {
+		    // 	name:name,
+      //           _replyto:email,
+      //            email:email,
+      //           comments:message,
+      //           _subject:subject
+		    // },
+		    data: $(this).serialize(), // serializes the form's elements.
+		    dataType: "json",
+		    success:function() {
+                console.log('ajax success'); 
+            }
+		});
+		// console.log("ajax");
+		$(this).get(0).reset();
+		console.log("success");
+		alertify.success("Your Message Has Been Sent");
+    };
+});
+};
