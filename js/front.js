@@ -9,7 +9,7 @@ $(function () {
     fullScreenContainer();
     utils();
     sliding();
-    // contactForm();
+    contactForm();
     map();
     counters();
     parallax();
@@ -18,7 +18,7 @@ $(function () {
 
 $(window).load(function () {
     windowWidth = $(window).width();
-    contactForm();
+    // contactForm();
     $(this).alignElementsSameHeight();
 
      masonry();
@@ -455,7 +455,7 @@ function contactForm() {
 		console.log(name + email + subject +message);
 	if (!name || !email || !subject || !message){
 		//console.log("enter all fields");
-		alertify.error ("Please enter all fields");
+		alertify.error("Please enter all fields");
 	} else {
 		$.ajax({
 			url: "https://formspree.io/johnnelsonlee@icloud.com",
@@ -471,12 +471,14 @@ function contactForm() {
 		    dataType: "json",
 		    success:function() {
                 console.log('ajax success'); 
+                alert("Your Message Has Been Sent")
+                alertify.success("Your Message Has Been Sent");
             }
 		});
 		// console.log("ajax");
 		$(this).get(0).reset();
 		console.log("success");
-		alertify.success("Your Message Has Been Sent");
+		//alertify.success("Your Message Has Been Sent");
     };
 });
 };

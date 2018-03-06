@@ -145,7 +145,7 @@ var findAbsolutePosition = function(obj)  {
 };
 
 var GMaps = (function(global) {
-  "use strict";
+"use strict";
 
   var doc = document;
 
@@ -1612,8 +1612,11 @@ GMaps.prototype.toImage = function(options) {
 GMaps.staticMapURL = function(options){
   var parameters = [],
       data,
-      static_root = 'http://maps.googleapis.com/maps/api/staticmap';
+      static_root = 'http://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=14&size=400x400&key=AIzaSyCkuAHr22L-Rc1fg1yBd_DraYcDniyKm7U';
+      //https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=14&size=400x400&key=YOUR_API_KEY
 
+      //api key for johnportfolio
+      // AIzaSyCkuAHr22L-Rc1fg1yBd_DraYcDniyKm7U 
   if (options.url) {
     static_root = options.url;
     delete options.url;
@@ -2130,3 +2133,4 @@ if (!Array.prototype.indexOf) {
   
 return GMaps;
 }));
+
